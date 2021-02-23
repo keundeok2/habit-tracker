@@ -8,7 +8,7 @@ class HabitAddForm extends PureComponent {
     event.preventDefault(); // 브라우저의 기본기능을 취소시킴 ( form이 submit 되면 화면이 전체 refresh )
 
     const name = this.inputRef.current.value;
-    this.props.onAdd(name);
+    name && this.props.onAdd(name);
     /* input 값 초기화  */
     this.inputRef.current.value = "";
     // this.formRef.current.reset();

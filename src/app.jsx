@@ -1,11 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import "./app.css";
 import Habits from "./components/habits";
 import Navbar from "./components/navbar";
 
-class App extends React.Component {
+class App extends Component {
   state = {
-    totalCounts: 0,
     habits: [
       { id: 1, name: "Reading", count: 0 },
       { id: 2, name: "Running", count: 0 },
@@ -14,21 +13,24 @@ class App extends React.Component {
   };
 
   handleIncrement = habit => {
-    const habits = [...this.state.habits];
-    const index = habits.indexOf(habit);
-    const totalCounts = this.state.totalCounts + 1;
-    habits[index].count++;
-
-    this.setState({ habits, totalCounts }); // {habits : habits} 와 같다. key와 value가 동일한 경우 생략 가능
+    const habits = this.state.habits.map(item => {
+      if (item.id === habit.id) {
+        return { ...habit, count: habit.count + 1 };
+      }
+      return item;
+    });
+    this.setState({ habits });
   };
 
   handleDecrement = habit => {
-    const habits = [...this.state.habits];
-    const index = habits.indexOf(habit);
-    const count = habits[index].count - 1;
-    const totalCounts = this.state.totalCounts - 1;
-    habits[index].count = count < 0 ? 0 : count;
-    this.setState({ habits, totalCounts });
+    const habits = this.state.habits.map(item => {
+      if (item.id === habit.id) {
+        const count = habit.count - 1;
+        return { ...habit, count: count < 0 ? 0 : count };
+      }
+      return item;
+    });
+    this.setState({ habits });
   };
 
   handleDelete = habit => {
@@ -38,16 +40,16 @@ class App extends React.Component {
 
   handleAdd = name => {
     const habits = [...this.state.habits, { id: Date.now(), name, count: 0 }];
-
     this.setState({ habits });
   };
 
   handleReset = () => {
     const habits = this.state.habits.map(habit => {
-      habit.count = 0;
+      if (habit.count !== 0) {
+        return { ...habit, count: 0 };
+      }
       return habit;
     });
-
     this.setState({ habits });
   };
 
