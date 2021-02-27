@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Habit from "./habit";
 import HabitAddForm from "./habitAddForm";
+import Button1 from "./post_css_module/button1";
+import Button2 from "./post_css_module/button2";
 
 class Habits extends Component {
   handleIncrement = habit => {
@@ -39,6 +41,8 @@ class Habits extends Component {
         <button className="habits-reset" onClick={this.props.onReset}>
           Reset All
         </button>
+        <Button1 />
+        <Button2 />
       </>
     );
   }
